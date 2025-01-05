@@ -21,6 +21,18 @@ export const signup = async (username, password) => {
     return response.json();
 };
 
+export const getGenres = async ()=>{
+  const response = await fetch(
+    'http://localhost:8080/api/movies/tmdb/genres', {
+    headers: {
+      'Authorization': window.localStorage.getItem('token'),
+        'Content-Type': 'application/json'
+    }
+  }
+  )
+  return response.json();
+};
+
 
 export const getFavouriteMovies = async () => {
   const response = await fetch(
@@ -47,4 +59,8 @@ export const addToFavourites = async (movieId) => {
   }
   )
   return response.json();
+}
+
+export const getMovie = async ()=>{
+
 }
