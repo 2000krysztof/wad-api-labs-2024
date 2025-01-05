@@ -5,7 +5,8 @@ import express from 'express';
 import {
   getUpcomingMovies,
 	getGenres,
-	getMovie
+	getMovie,
+	getMovieImages
 } from '../tmdb-api';
 
 const router = express.Router();
@@ -73,27 +74,20 @@ router.get("/tmdb/genres", asyncHandler(async (req, res)=>{
 }));
 
 
-router.get("/tmdb/getMany", asyncHandler(async (req, res)=>{
-	try {
-        const movieIds = req.body.movieIds;
-        if (!Array.isArray(movieIds)) {
-            return res.status(400).json({ message: "movieIds must be an array" });
-        }
-
-        const movies = await Promise.all(movieIds.map(id => getMovie(id)));
-
-        res.status(200).json({ total_results: movies.length, results: movies });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Failed to fetch movies" });
-    }
-
+router.get("/tmdb/images/:id" , asyncHandler(async (req, res) =>{
+	const id = req.params.id;
+	const images = await getMovieImages(id);	
+	res.status(200).json(images);
 }));
+
+
 
 router.get("/tmdb/:id", asyncHandler(async (req, res)=>{
     const id = parseInt(req.params.id);
 	const movie = await getMovie(id);
 	res.status(200).json(movie);
 }));
+
+
 
 export default router;

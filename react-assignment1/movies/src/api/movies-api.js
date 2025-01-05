@@ -33,6 +33,20 @@ export const getGenres = async ()=>{
   return response.json();
 };
 
+export const getMovieImages = async ({ queryKey }) => {
+	const [, idPart] = queryKey;
+	const { id } = idPart;
+	const response = await fetch(
+    `http://localhost:8080/api/movies/tmdb/images/${id}`, {
+    headers: {
+      'Authorization': window.localStorage.getItem('token'),
+        'Content-Type': 'application/json'
+    }
+  }
+  )
+  return response.json();
+};
+
 
 export const getFavouriteMovies = async () => {
   const response = await fetch(
@@ -45,6 +59,7 @@ export const getFavouriteMovies = async () => {
   )
   return response.json();
 };
+
 
 
 export const addToFavourites = async (movieId) => {

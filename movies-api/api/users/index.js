@@ -32,7 +32,6 @@ router.post('/', asyncHandler(async (req, res) => {
 
 router.put("/addToFavourites" ,authenticate, asyncHandler(async (req, res)=>{
 	try{
-		console.log(req.body);
         if (!req.body.id) {
             return res.status(400).json({ success: false, msg: "Movie ID is required." });
         }

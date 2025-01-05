@@ -35,7 +35,6 @@ export const getGenres = async () => {
 
 
 export const getMovie = async (id)=>{
-	console.log(id);
 	try{
 		const response = await fetch(
 			`https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.TMDB_KEY}`
@@ -50,4 +49,20 @@ export const getMovie = async (id)=>{
 	}
 
 
+}
+
+export const getMovieImages = async (id)=>{
+
+	try{
+		const response = await fetch(
+		      `https://api.themoviedb.org/3/movie/${id}/images?api_key=${process.env.TMDB_KEY}`
+		);	
+        if (!response.ok) {
+            throw new Error(response.json().message);
+        }
+        return await response.json();
+
+	}catch(error){
+		throw error;
+	}
 }
