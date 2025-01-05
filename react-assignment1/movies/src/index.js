@@ -15,6 +15,7 @@ import TrendingMoviesPage from "./pages/terendingMoviesPage";
 import NowPlayingMoviesPage from "./pages/nowPlayingMoviesPage";
 import ActorDetailsPage from "./pages/actorDetatilsPage"; 
 import LoginPage from "./pages/loginPage";
+import SignUpPage from "./pages/signUpPage";
 import ProtectedRoutes from "./protectedRoute";
 import AuthContextProvider from "./contexts/authContext";
 
@@ -48,6 +49,7 @@ const App = () => {
         <MoviesContextProvider>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
 
           <Route element={<ProtectedRoutes />}>
             <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
