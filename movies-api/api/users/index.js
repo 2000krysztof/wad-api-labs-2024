@@ -4,6 +4,7 @@ import User from './userModel';
 import asyncHandler from 'express-async-handler';
 const router = express.Router(); // eslint-disable-line
 import jwt from 'jsonwebtoken';
+import authenticate from '../../authenticate';
 
 // Get all users
 router.get('/', async (req, res) => {
@@ -27,6 +28,25 @@ router.post('/', asyncHandler(async (req, res) => {
         console.error(error);
         res.status(500).json({ success: false, msg: 'Internal server error.' });
     }
+}));
+
+router.put("/addToFavourites" ,authenticate, asyncHandler(async (req, res)=>{
+	try{
+		console.log(req.body);
+        if (!req.body.id) {
+            return res.status(400).json({ success: false, msg: "Movie ID is required." });
+        }
+		const result = await User.updateOne({
+			_id: req.user.id,
+		},
+			{$addToSet: {favourites: req.body.id}}
+		);
+		res.status(200).json({success: true, msg: "Movie successfuly added to favourites "})
+	}catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, msg: 'Internal server error.' });
+    }
+
 }));
 
 
